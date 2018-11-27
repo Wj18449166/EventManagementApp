@@ -10,7 +10,7 @@
       </p>
     </div>
     <div id="detail-button-bar4" class="button-bar">
-      <button id="detail-button28" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Register</button>
+      <button ng-if="data.showAdd==1" id="detail-button28" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Register</button>
       <a ui-sref="tabsController.maps()" id="detail-button29" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Address</a>
     </div>
   </ion-content>
