@@ -2,15 +2,16 @@
   <ion-content padding="true" class="has-header">
     <form id="login-form1" class="list">
       <label class="item item-input" id="login-input1">
-        <span class="input-label">Input</span>
-        <input type="text" placeholder="">
+        <span class="input-label">Username</span>
+        <input type="text" placeholder="" ng-model="data.username">
       </label>
       <div class="spacer" style="width: 300px; height: 18px;"></div>
       <label class="item item-input" id="login-input4">
-        <span class="input-label">Input</span>
-        <input type="text" placeholder="">
+        <span class="input-label">Password</span>
+        <input type="text" placeholder="" ng-model="data.password">
       </label>
     </form>
-    <button id="login-button30" class="button button-positive button-block">Login</button>
+    <button id="login-button30" class="button button-positive button-block" ng-click="login()">Login</button>
   </ion-content>
 </ion-view>
+
