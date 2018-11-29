@@ -1,9 +1,15 @@
 <ion-view title="Oevent" id="page8">
   <ion-content padding="true" class="has-header">
     <ion-list id="oevent-list8">
-      <ion-item id="oevent-list-item28" ui-sref="tabsController.detail()">Item 1</ion-item>
-      <ion-item id="oevent-list-item29">Item 2</ion-item>
-      <ion-item id="oevent-list-item30">Item 3</ion-item>
+      <ion-item id="oevent-list-item28" ui-sref="tabsController.detail({ id: event.id })" ng-repeat="event in events">{{event.name}}</ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
+
+<!-- <ion-view title="Event list" id="page7">
+  <ion-content padding="true" class="has-header">
+    <ion-list id="eventList-list11">
+      <ion-item id="eventList-list-item37" ui-sref="tabsController.eventDetailsPage({ id: event.id })" ng-repeat="event in events">{{event.name}}</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view> -->

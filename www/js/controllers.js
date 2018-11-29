@@ -20,11 +20,11 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('venueCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('venueCtrl', ['$scope', '$stateParams', 'Store',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
-
+        function ($scope, $stateParams,Store) {
+            $scope.events = Store.getAllEvents();
 
         }])
 
@@ -44,10 +44,17 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('detailCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('detailCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
+        function ($scope, $stateParams, $http) {
+
+            $http.get('http://localhost:1337/Event/detail/' + $stateParams.id)
+                .then(function (response) {
+
+                    $scope.events = response.data.event;
+                    console.log("$scope.events =" + $scope.events);
+                });
 
 
         }])
@@ -60,20 +67,37 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('oeventCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('oeventCtrl', ['$scope', '$stateParams', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
+        function ($scope, $stateParams, $http) {
+
+            $http.get('http://localhost:1337/event/index')
+                .then(function (response) {
+                    $scope.events = response.data.events.filter(function (item) {
+                        //console.log("$stateParams.org = "+ $stateParams.org);
+                        return item.organizer == $stateParams.org;
+                    });
+
+                });
 
 
         }])
 
-    .controller('veventCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('veventCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
+        function ($scope, $stateParams,$http) {
 
+            $http.get('http://localhost:1337/event/index')
+            .then(function (response) {
+            $scope.events = response.data.events.filter(function (item) {
 
+            return item.venue === $stateParams.ven;
+            });
+            
+            
+            });
         }])
 
 
