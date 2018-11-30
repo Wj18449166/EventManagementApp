@@ -1,17 +1,16 @@
 <ion-view title="Detail" id="page6">
   <ion-content padding="true" class="has-header">
     <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+      <!-- <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i> -->
+      <img ng-src="{{events.imgURL}}" height="200" width="200">
     </div>
-    <h1 id="detail-heading2" style="color:#000000;">Heading</h1>
+    <h1 id="detail-heading2" style="color:#000000;">{{events.name}}</h1>
     <div id="detail-markdown7" class="show-list-numbers-and-dots">
-      <p style="color:#000000;">Some friendly
-        <strong>name: {{events.name}}</strong>
-      </p>
+      <p style="color:#000000;">{{events.fullDes}}</p >
     </div>
     <div id="detail-button-bar4" class="button-bar">
-      <button ng-if="data.showAdd==1" id="detail-button28" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Register</button>
-      <a ui-sref="tabsController.maps()" id="detail-button29" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Address</a>
+      <button id="detail-button28" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block" ng-click="register_event()">Register</button>
+      <a ui-sref="tabsController.maps({id: events.venue})" id="detail-button29" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Address</a>
     </div>
   </ion-content>
 </ion-view>

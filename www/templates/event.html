@@ -1,18 +1,23 @@
 <ion-view title="Event" id="page2">
-  <ion-content padding="true" class="has-header">
-    <a class="list card" ng-repeat="event in events" style="display:block;text-decoration:none;" ui-sref="tabsController.detail()" id="event-card25">
-      <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-        <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+<ion-content padding="true" class="has-header">
+  <div class="list card" id="home-card21" ng-repeat="event in events"  ui-sref="tabsController.detail( {id: event.id} )">
+    <div style="margin: 0px; background-color: rgb(232, 235, 239); text-align: center;">
+      <img ng-src="{{event.imgURL}}" height="200" width="200">
+    </div>
+    <div class="item item-body" id="home-list-item-container2">
+      <div id="home-markdown2" class="show-list-numbers-and-dots">
+        <p style="margin-top:0px;color:#000000;">
+          {{event.name}}
+        </p >
+        <p style="margin-top:0px;color:#000000;">
+          Venue: {{event.venue}}
+        </p >
+        <p style="margin-top:0px;color:#000000;">
+          Date: {{event.eventDate}}
+        </p >
       </div>
-      <h1 id="event-heading4" style="color:#000000;">Heading</h1>
-      <div class="item item-body" id="event-list-item-container6">
-        <div id="event-markdown6" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">Some friendly
-            <strong> Venue: {{event.venue}}</strong>
-          </p>
-        </div>
-      </div>
-    </a>
-  </ion-content>
+    </div>
+  </div>
+</ion-content>
 </ion-view>
 

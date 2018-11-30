@@ -108,7 +108,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab4/event/map
   */
   .state('tabsController.maps', {
-    url: '/event/map',
+    url: '/event/map/:id',
     views: {
       'tab1': {
         templateUrl: 'templates/maps.html',

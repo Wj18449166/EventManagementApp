@@ -31,9 +31,9 @@ angular.module('app.services', [])
 
         };
 
-        this.setUserinfo = function (id, username) {
+        this.setUserinfo = function (username) {
 
-            person_items.id = id;
+            //person_items.id = id;
             person_items.username = username;
             return true;
 
@@ -228,11 +228,13 @@ angular.module('app.services', [])
             return locations;
         };
 
+        this.getLocationItem = function (id) {
 
-
-
-
-
-
-
+            for(i=0;i<locations.length;i++){
+              if(locations[i].VenueID==id){
+                return locations[i];
+              }
+            }
+          };
+   
     });

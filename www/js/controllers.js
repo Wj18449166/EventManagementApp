@@ -23,7 +23,7 @@ angular.module('app.controllers', [])
     .controller('venueCtrl', ['$scope', '$stateParams', 'Store',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams,Store) {
+        function ($scope, $stateParams, Store) {
             $scope.events = Store.getAllEvents();
 
         }])
@@ -44,28 +44,67 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('detailCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('detailCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams, $http) {
+        function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup) {
 
             $http.get('http://localhost:1337/Event/detail/' + $stateParams.id)
                 .then(function (response) {
 
                     $scope.events = response.data.event;
-                    console.log("$scope.events =" + $scope.events);
+                    //console.log("$scope.events =" + $scope.events);
                 });
 
+            $scope.backPage = function () {
+                $ionicHistory.goBack();
+            }
+            $scope.register_event = function () {
+                // A confirm dialog
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Register this event?',
+                    template: 'Are you sure?'
+                });
+
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        $http.get('http://localhost:1337//events/association_task/' + $stateParams.id + '/supervises').then(function (response) {
+                        });
+                        var show_OK = $ionicPopup.alert({ title: 'successfully' });
+                    } else {
+                        var show_no_quato = $ionicPopup.alert({ title: 'Not enough quato!' });
+                    }
+                });
+            }
+
 
         }])
 
-    .controller('mapsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+
+
+    .controller('mapsCtrl', ['$scope', '$stateParams', 'Store', '$ionicHistory',   // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams) {
+        function ($scope, $stateParams, Store, $ionicHistory) {
+            $scope.backPage = function () {
+                $ionicHistory.goBack();
+            }
+
+            console.log($stateParams.id);
+            $scope.item = Store.getLocationItem($stateParams.id);
+            console.log($scope.item);
+
+            var map = L.map('map').setView([$scope.item.Latitude, $scope.item.Longitude], 17);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href=" ">OpenStreetMap</a > contributors'
+            }).addTo(map);
+            L.marker([$scope.item.Latitude, $scope.item.Longitude]).addTo(map)
+                .bindPopup($scope.item.CampusID);
 
 
         }])
+    
 
     .controller('oeventCtrl', ['$scope', '$stateParams', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
@@ -87,17 +126,17 @@ angular.module('app.controllers', [])
     .controller('veventCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams,$http) {
+        function ($scope, $stateParams, $http) {
 
             $http.get('http://localhost:1337/event/index')
-            .then(function (response) {
-            $scope.events = response.data.events.filter(function (item) {
+                .then(function (response) {
+                    $scope.events = response.data.events.filter(function (item) {
 
-            return item.venue === $stateParams.ven;
-            });
-            
-            
-            });
+                        return item.venue === $stateParams.ven;
+                    });
+
+
+                });
         }])
 
 
@@ -114,7 +153,7 @@ angular.module('app.controllers', [])
                 $http.post("http://localhost:1337/user/login", $scope.data)
                     .then(function (response) {
 
-                        Store.setUserinfo(1, $scope.data.username);
+                        Store.setUserinfo($scope.data.username);
 
                         // A confirm dialog
                         var confirmPopup = $ionicPopup.confirm({
