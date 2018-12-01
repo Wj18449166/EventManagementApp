@@ -1,8 +1,8 @@
 <ion-view title="Event" id="page2">
 <ion-content padding="true" class="has-header">
   <div class="list card" id="home-card21" ng-repeat="event in events"  ui-sref="tabsController.detail( {id: event.id} )">
-    <div style="margin: 0px; background-color: rgb(232, 235, 239); text-align: center;">
-      <img ng-src="{{event.imgURL}}" height="200" width="200">
+    <div style="margin: 0px; line-height: 0px; background-color: rgb(232, 235, 239); text-align: center;">
+      <img ng-src="{{event.imgURL}}" style="width:100%">
     </div>
     <div class="item item-body" id="home-list-item-container2">
       <div id="home-markdown2" class="show-list-numbers-and-dots">

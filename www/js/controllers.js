@@ -53,12 +53,13 @@ angular.module('app.controllers', [])
                 .then(function (response) {
 
                     $scope.events = response.data.event;
-                    //console.log("$scope.events =" + $scope.events);
+                    console.log("$scope.events =" + $scope.events);
                 });
 
             $scope.backPage = function () {
                 $ionicHistory.goBack();
             }
+
             $scope.register_event = function () {
                 // A confirm dialog
                 var confirmPopup = $ionicPopup.confirm({
@@ -67,18 +68,26 @@ angular.module('app.controllers', [])
                 });
 
                 confirmPopup.then(function (res) {
+                    console.log(res);
                     if (res) {
-                        $http.get('http://localhost:1337//events/association_task/' + $stateParams.id + '/supervises').then(function (response) {
+                        console.log($stateParams.id);
+                        $http.post('http://localhost:1337/person/addEvent/' + $stateParams.id).then(function (response) {
+                            if (response.data.results == "OK") {
+                                var show_OK = $ionicPopup.alert({ title: 'successfully' });
+                            } else if (response.data.results == "No Quote"){
+                                $ionicPopup.alert({ title: 'No Quote' });
+                            } else if (response.data.results == "You have registered!"){
+                                $ionicPopup.alert({ title: 'You have registered!' });
+                            }
                         });
-                        var show_OK = $ionicPopup.alert({ title: 'successfully' });
-                    } else {
-                        var show_no_quato = $ionicPopup.alert({ title: 'Not enough quato!' });
                     }
                 });
             }
 
 
         }])
+
+
 
 
 
@@ -104,7 +113,7 @@ angular.module('app.controllers', [])
 
 
         }])
-    
+
 
     .controller('oeventCtrl', ['$scope', '$stateParams', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
