@@ -53,7 +53,7 @@ angular.module('app.controllers', [])
                 .then(function (response) {
 
                     $scope.events = response.data.event;
-                    console.log("$scope.events =" + $scope.events);
+                    //console.log("$scope.events =" + $scope.events);
                 });
 
             $scope.backPage = function () {
@@ -70,7 +70,7 @@ angular.module('app.controllers', [])
                 confirmPopup.then(function (res) {
                     console.log(res);
                     if (res) {
-                        console.log($stateParams.id);
+                        //console.log($stateParams.id);
                         $http.post('http://localhost:1337/person/addEvent/' + $stateParams.id).then(function (response) {
                             if (response.data.results == "OK") {
                                 var show_OK = $ionicPopup.alert({ title: 'successfully' });
