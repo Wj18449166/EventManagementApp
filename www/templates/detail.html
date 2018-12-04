@@ -9,7 +9,7 @@
       <p style="color:#000000;">{{events.fullDes}}</p >
     </div>
     <div id="detail-button-bar4" class="button-bar">
-      <button id="detail-button28" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block" ng-click="register_event()">Register</button>
+      <button ng-if="data.showAdd==1" id="detail-button28" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block" ng-click="register_event()">Register</button>
       <a ui-sref="tabsController.maps({id: events.venue})" id="detail-button29" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Address</a>
     </div>
   </ion-content>

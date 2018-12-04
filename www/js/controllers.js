@@ -44,10 +44,10 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('detailCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('detailCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup','Store',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup) {
+        function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup, Store) {
 
             $http.get('http://localhost:1337/Event/detail/' + $stateParams.id)
                 .then(function (response) {
@@ -55,6 +55,13 @@ angular.module('app.controllers', [])
                     $scope.events = response.data.event;
                     //console.log("$scope.events =" + $scope.events);
                 });
+                $scope.data = {};
+            var item = Store.getSelected();
+            if(item.username == 'visitor'){
+                $scope.data.showAdd = 0;
+            }else{
+                $scope.data.showAdd = 1;
+            }  
 
             $scope.backPage = function () {
                 $ionicHistory.goBack();
@@ -99,9 +106,7 @@ angular.module('app.controllers', [])
                 $ionicHistory.goBack();
             }
 
-            console.log($stateParams.id);
             $scope.item = Store.getLocationItem($stateParams.id);
-            console.log($scope.item);
 
             var map = L.map('map').setView([$scope.item.Latitude, $scope.item.Longitude], 17);
 
@@ -178,7 +183,6 @@ angular.module('app.controllers', [])
                             }
                         });
 
-
                     }, function (response) {
 
                         var alertPopup = $ionicPopup.alert({
@@ -191,16 +195,20 @@ angular.module('app.controllers', [])
 
         }])
 
-    .controller('registerEventsCtrl', ['$scope', '$stateParams', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('registerEventsCtrl', ['$scope', '$stateParams', '$http','Store','$ionicPopup',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function ($scope, $stateParams, $http) {
+        function ($scope, $stateParams, $http, Store, $ionicPopup) {
 
-            $http.get('http://localhost:1337/Person/myevent')
+            var item = Store.getSelected();
+            if(item.username == 'visitor'){
+                $ionicPopup.alert({ title: 'Not log in' });
+            }else{
+                $http.get('http://localhost:1337/Person/myevent')
                 .then(function (response) {
-
+                    //console.log("is enter registerEventsCtrl ?");
                     $scope.events = response.data;
                 });
-
+            }  
 
         }])
